@@ -17,9 +17,15 @@ import {
   View,
 } from 'react-native';
 import Login from './screens/Login';
+import {ApplicationProvider} from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
 
 const App = () => {
-  return <Login />;
+  return (
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <Login />
+    </ApplicationProvider>
+  );
 };
 
 const styles = StyleSheet.create({

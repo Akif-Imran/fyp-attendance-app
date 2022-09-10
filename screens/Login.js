@@ -1,16 +1,35 @@
-import React from 'react';
-import {View, Text, StyleSheet, TextInput, Button, Image} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Image,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomTextInput from '../components/CustomTextInput';
+import {Radio, RadioGroup} from '@ui-kitten/components';
 
 const Login = () => {
+  const [userType, setUserType] = useState(0);
   return (
-    <View style={styles.mainContainer}>
+    <TouchableOpacity
+      style={styles.mainContainer}
+      activeOpacity={1}
+      onPress={Keyboard.dismiss}>
       <View style={styles.secondLevelTopContainer}>
         <Image
           source={require('../assets/images/png/cloud.png')}
           style={styles.imageStyle}
-          tintColor="#EEEEEE"
+          tintColor="#E0E0E0"
         />
-        <Text style={styles.grayText}>BIIT Attendance System</Text>
+        <Text style={[styles.grayText, {fontWeight: '700'}]}>
+          BIIT Attendance System
+        </Text>
       </View>
       <View style={styles.secondLevelMiddleContainer}>
         {/* Intro */}
@@ -23,30 +42,70 @@ const Login = () => {
         {/* Email */}
         <View style={styles.thirdLevelSecondContainer}>
           <Text style={styles.redSmallHeading}>Username</Text>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputIconContainer}></View>
-            <TextInput style={styles.input} placeholder="Username" />
-          </View>
+          {/* <View style={styles.inputContainer}>
+            <View style={styles.inputIconContainer}>
+              <Ionicons name={'person'} color={'#999999'} size={20} />
+            </View>
+            <TextInput
+              selectionColor={'#F85F6A'}
+              style={styles.input}
+              placeholder="Username"
+              allowFontScaling={true}
+            />
+          </View> */}
+          <CustomTextInput
+            icon={'person'}
+            iconColor={'#999999'}
+            iconSize={20}
+            placeholder={'Username'}
+          />
         </View>
         {/* Password */}
         <View style={styles.thirdLevelThirdContainer}>
           <Text style={styles.redSmallHeading}>Password</Text>
-          <View style={styles.inputContainer}>
-            <View style={styles.inputIconContainer}></View>
-            <TextInput style={styles.input} placeholder="Password" />
-          </View>
+          {/* <View style={styles.inputContainer}>
+            <View style={styles.inputIconContainer}>
+              <MaterialCommunityIcons
+                name={'key'}
+                color={'#999999'}
+                size={24}
+              />
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              allowFontScaling={true}
+              selectionColor={'#F85F6A'}
+            />
+          </View> */}
+          <CustomTextInput
+            icon={'key'}
+            iconColor={'#999999'}
+            iconSize={20}
+            placeholder={'Password'}
+          />
+          <RadioGroup
+            style={styles.radioContainer}
+            selectedIndex={userType}
+            onChange={index => setUserType(index)}>
+            <Radio status="danger">Student</Radio>
+            <Radio status="danger">Teacher</Radio>
+            <Radio status="danger">Admin</Radio>
+            <Radio status="danger">Parent</Radio>
+          </RadioGroup>
         </View>
         {/* Sign In Button */}
         <View style={styles.thirdlevelFourthContainer}>
-          {/* TODO - Change Button to Touchable Opacity */}
-          <Button title="Sign In" color={'#F85F6A'} />
+          <TouchableOpacity style={styles.redButton} activeOpacity={0.9}>
+            <Text style={styles.whiteButtonText}>Sign In</Text>
+          </TouchableOpacity>
           <Text style={styles.grayText}>Forgot Password?</Text>
         </View>
       </View>
       <View style={styles.secondLevelBottomContaienr}>
         <Text> </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -56,9 +115,12 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: 'column',
-    paddingHorizontal: 40,
+    paddingHorizontal: 28,
     backgroundColor: 'white',
     // borderWidth: 1,
+  },
+  radioContainer: {
+    flexDirection: 'row',
   },
   imageStyle: {
     height: 100,
@@ -78,7 +140,7 @@ const styles = StyleSheet.create({
   },
   thirdlevelFourthContainer: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     // borderWidth: 1,
   },
   inputContainer: {
@@ -92,6 +154,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     borderTopLeftRadius: 5,
     borderBottomLeftRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 1,
   },
   input: {
@@ -102,7 +166,23 @@ const styles = StyleSheet.create({
     maxHeight: 35,
     fontSize: 12,
     fontFamily: 'Quicksand-Bold',
+    color: '#757575',
     borderWidth: 1,
+  },
+  redButton: {
+    backgroundColor: '#F85F6A',
+    padding: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    elevation: 2,
+    shadowColor: '#F85F6A',
+  },
+  whiteButtonText: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   grayText: {
     fontFamily: 'Quicksand-SemiBold',
