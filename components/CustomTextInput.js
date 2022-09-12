@@ -2,7 +2,14 @@ import {StyleSheet, Text, View, TextInput} from 'react-native';
 import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const CustomTextInput = ({icon, iconColor, iconSize, placeholder}) => {
+const CustomTextInput = ({
+  icon,
+  iconColor,
+  iconSize,
+  placeholder,
+  value,
+  setValue,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -23,6 +30,8 @@ const CustomTextInput = ({icon, iconColor, iconSize, placeholder}) => {
         <Ionicons name={icon} color={iconColor} size={iconSize} />
       </View>
       <TextInput
+        value={value}
+        onChangeText={text => setValue(text)}
         onFocus={handleFocus}
         onBlur={handleBlur}
         selectionColor={'#F85F6A'}

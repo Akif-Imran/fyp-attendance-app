@@ -1,21 +1,60 @@
+/* Native imports */
 import React, {useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  Button,
   Image,
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import CustomTextInput from '../components/CustomTextInput';
+/* 3rd party packages */
 import {Radio, RadioGroup} from '@ui-kitten/components';
+import axios from 'axios';
+/* My imports */
+import CustomTextInput from '../components/CustomTextInput';
 
 const Login = () => {
   const [userType, setUserType] = useState(0);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleAuthentication = async () => {
+    console.log('method called');
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify({
+      username: 'Laporte2020',
+      password: 'J2K',
+      userType: 2,
+    });
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch('https://127.0.0.1:7049/api/login/authenticate-user', requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    // axios
+    //   .get('https://192.168.100.12:7049/api/login/authenticate-user', {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     data: {
+    //       username: 'Laporte2020',
+    //       password: 'J2K',
+    //       userType: 2,
+    //     },
+    //   })
+    //   .then(response => console.log(response))
+    //   .catch(error => console.log(error));
+  };
   return (
     <TouchableOpacity
       style={styles.mainContainer}
@@ -58,6 +97,8 @@ const Login = () => {
             iconColor={'#999999'}
             iconSize={20}
             placeholder={'Username'}
+            value={username}
+            setValue={setUsername}
           />
         </View>
         {/* Password */}
@@ -83,6 +124,8 @@ const Login = () => {
             iconColor={'#999999'}
             iconSize={20}
             placeholder={'Password'}
+            value={password}
+            setValue={setPassword}
           />
           <RadioGroup
             style={styles.radioContainer}
@@ -96,7 +139,10 @@ const Login = () => {
         </View>
         {/* Sign In Button */}
         <View style={styles.thirdlevelFourthContainer}>
-          <TouchableOpacity style={styles.redButton} activeOpacity={0.9}>
+          <TouchableOpacity
+            style={styles.redButton}
+            activeOpacity={0.9}
+            onPress={handleAuthentication}>
             <Text style={styles.whiteButtonText}>Sign In</Text>
           </TouchableOpacity>
           <Text style={styles.grayText}>Forgot Password?</Text>
@@ -120,6 +166,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   radioContainer: {
+    marginTop: 20,
     flexDirection: 'row',
   },
   imageStyle: {
@@ -135,7 +182,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   thirdLevelThirdContainer: {
-    flex: 1,
+    flex: 2,
     // borderWidth: 1,
   },
   thirdlevelFourthContainer: {
