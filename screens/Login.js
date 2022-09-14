@@ -12,16 +12,25 @@ import {
 import {Radio, RadioGroup} from '@ui-kitten/components';
 import axios from 'axios';
 /* My imports */
-import CustomTextInput from '../components/CustomTextInput';
+import _TextInput from '../components/_TextInput';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [userType, setUserType] = useState(0);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleAuthentication = async () => {
     console.log('method called');
-    var myHeaders = new Headers();
+    if (userType === 0) {
+      navigation.navigate('StudentDrawer');
+    } else if (userType === 1) {
+      navigation.navigate('TeacherDrawer');
+    } else if (userType === 2) {
+      navigation.navigate('AdminDrawer');
+    } else {
+      navigation.navigate('ParentDrawer');
+    }
+    /* var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     var raw = JSON.stringify({
@@ -31,29 +40,33 @@ const Login = () => {
     });
 
     var requestOptions = {
-      method: 'GET',
+      method: 'POST',
       headers: myHeaders,
       body: raw,
       redirect: 'follow',
     };
 
     fetch('https://127.0.0.1:7049/api/login/authenticate-user', requestOptions)
-      .then(response => response.text())
+      .then(response => response.json())
       .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-    // axios
-    //   .get('https://192.168.100.12:7049/api/login/authenticate-user', {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     data: {
-    //       username: 'Laporte2020',
-    //       password: 'J2K',
-    //       userType: 2,
-    //     },
-    //   })
-    //   .then(response => console.log(response))
-    //   .catch(error => console.log(error));
+      .catch(error => console.log('error', error)); */
+    /* axios
+      .get('https://192.168.100.12:7049/api/login/authenticate-user', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          username: 'Laporte2020',
+          password: 'J2K',
+          userType: 2,
+        },
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        navigation.navigate('TeacherDrawer');
+      })
+      .catch(error => console.log(error)); */
   };
   return (
     <TouchableOpacity
@@ -92,7 +105,7 @@ const Login = () => {
               allowFontScaling={true}
             />
           </View> */}
-          <CustomTextInput
+          <_TextInput
             icon={'person'}
             iconColor={'#999999'}
             iconSize={20}
@@ -119,7 +132,7 @@ const Login = () => {
               selectionColor={'#F85F6A'}
             />
           </View> */}
-          <CustomTextInput
+          <_TextInput
             icon={'key'}
             iconColor={'#999999'}
             iconSize={20}
